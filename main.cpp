@@ -40,7 +40,7 @@ public:
                             ret_tokens.push_back(token);
                         } else {
                             std::cout << "\033[1;31mError: Invalid Input\033[0m\nThe character 'curr_char' is not a valid member of 'literals'" << std::endl;
-                            std::cout << "Error at -> " << curr_err_showoff << ", at line " << line_num << std::endl;
+                            std::cout << "Error at -> '" << curr_err_showoff << "', at line " << line_num << std::endl;
                             has_error = true;
                         }
                     }
