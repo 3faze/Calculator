@@ -83,10 +83,10 @@ int main(int argc, char* argv[]) {
         }
         rfile.close();
         Lexer lexer;
-        std::vector<std::string> tokens = lexer.tokenize(lines);
-        for (const std::string& token : tokens) {
+        std::vector<Token> tokens = lexer.tokenize(lines);
+        for (const Token& token : tokens) {
             if (has_error == false) {
-                std::cout << token << std::endl;
+                std::cout << token.value << " : " << token.type << std::endl;
             } else {
                 return 1;
             }
