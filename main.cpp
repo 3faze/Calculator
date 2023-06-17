@@ -7,15 +7,20 @@
 
 bool has_error = false;
 
+struct Token{
+    char value;
+    std::string type;
+};
+
 class Lexer {
 public:
     int line_num;
     std::string curr_char;
     std::vector<char> literals = {'+', '-', '/', '*', ' ', ';'};
-    std::vector<std::string> tokenize(const std::vector<std::string>& lines) {
+    std::vector<Token> tokenize(const std::vector<std::string>& lines) {
         bool at_end_of_line = false;
         std::string curr_err_showoff;
-        std::vector<std::string> ret_tokens;
+        std::vector<Token> ret_tokens;
 
         int line_num = 0;
         for (const std::string& line : lines) {
@@ -30,14 +35,23 @@ public:
                 if (curr_char != ' '){
                     if (std::find(literals.begin(), literals.end(), curr_char) != literals.end()) {
                         if (curr_char == ';'){
-                            ret_tokens.push_back(";");
+                            Token semicolon;
+                            semicolon.type = "LITERAL";
+                            semicolon.value = ';';
+                            ret_tokens.push_back(semicolon);
                             at_end_of_line = true;
                         } else {
-                            ret_tokens.push_back(token);
+                            Token literal;
+                            literal.type = "LITERAL";
+                            literal.value = curr_char;
+                            ret_tokens.push_back(literal);
                         }
                     } else {
                         if (std::isdigit(curr_char)){
-                            ret_tokens.push_back(token);
+                            Token number;
+                            number.type = "NUMBER";
+                            number.value = curr_char;
+                            ret_tokens.push_back(number);
                         } else {
                             std::cout << "\033[1;31mError: Invalid Input\033[0m\nThe character 'curr_char' is not a valid member of 'literals'" << std::endl;
                             std::cout << "Error at -> '" << curr_err_showoff << "', at line " << line_num << std::endl;
